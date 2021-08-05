@@ -1,5 +1,24 @@
+import React, { useState } from "react";
+import CpfCnpj from "@react-br-forms/cpf-cnpj-mask";
 import image from "./assets/images/undraw_social_distancing_2g0u.png"
+import { FaLocationArrow } from 'react-icons/fa';
+
+
 function App() {
+  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [mask, setMask] = useState("");
+  const text = [
+    {
+      title:"COMPROVANTE DE RESIDÊNCIA EM PIRACICABA"
+    },
+    {
+      title:"DOCUMENTO COM NÚMERO DE CPF DA PESSOA A SER VACINADA"
+    },
+    {
+      title:"DOCUMENTO DE IDENTIFICAÇÃO COM FOTO DA PESSOA A SER VACINADA"
+    }
+  ]
+
   return (
     <div>
       <header>
@@ -21,26 +40,38 @@ function App() {
                 <p>ESTÁ LIBERADO VACINA PARA PESSOAS COM 28</p>
                 <p>ANOS OU MAIS</p>
               </div>
-              <div className="my-6">
+              <div className="my-2">
                 <p className="text-green-500">Digite seu CPF para consultar/agendar a vacinação:</p>
-                <input placeholder="000.000.000-00" className="border-2 focus:border-green-500 bg-gray-100 rounded-md h-10 my-2" />
+                <CpfCnpj
+                  className="border-2 focus:border-green-500 bg-gray-100 rounded-md h-10 my-2 text-center border-2 w-11/12"
+                  value={cpfCnpj}
+                  onChange={(event, type) => {
+                  setCpfCnpj(event.target.value);
+                  setMask(type === "CPF");
+                  }}
+                />
               </div>
-              <div className="text-xs lowercase">
-                <p className="mb-5 uppercase font-bold">OBRIGATÓRIO A APRESENTAÇÃO DE:</p>
-                <p>COMPROVANTE DE RESIDÊNCIA EM PIRACICABA</p>
-                <p>DOCUMENTO COM NÚMERO DE CPF DA PESSOA A SER VACINADA</p>
-                <p>DOCUMENTO DE IDENTIFICAÇÃO COM FOTO DA PESSOA A SER VACINADA</p>
+              <div className="flex">
+                  <p className="mb-1 text-sm text-green-500">Obrigatório a apresentação de:</p>
+                </div>
+              <div className="flex text-xs lowercase">
+                {text.map(item => (
+                  <div className="flex rounded-md border-2 px-2 py-3 mr-1">
+                    <FaLocationArrow className="m-2 text-green-500" />
+                    <p>{item.title}</p>
+                  </div>
+                ))}
               </div>
             </div>
             <div>
-              <img src={image} className="w-80"/>
+              <img src={image} className="w-80" alt="pessoas com mascara"/>
             </div>
           </div>
           <div className="flex text-xs items-center max-w-4xl border-red-500 border-2 mx-1 mt-10 p-2 rounded-lg">
-            <p class="m-0">Atenção: Você está fazendo o agendamento no grupo <strong>"PESSOAS COM 28 ANOS OU MAIS".</strong> Caso não atenda aos critérios estabelecidos para este grupo, você não será vacinado.</p>
+            <p className="m-0">Atenção: Você está fazendo o agendamento no grupo <strong>"PESSOAS COM 28 ANOS OU MAIS".</strong> Caso não atenda aos critérios estabelecidos para este grupo, você não será vacinado.</p>
           </div>
           <div className="text-center m-5">
-            <p>FAÇA O PRÉ-CADASTRO NO SITE VACINA JÁ: <a href="https://www.vacinaja.sp.gov.br/" target="_blank" className="hover:text-green-500">https://www.vacinaja.sp.gov.br/</a></p>
+            <p>FAÇA O PRÉ-CADASTRO NO SITE VACINA JÁ: <a href="https://www.vacinaja.sp.gov.br/" className="hover:text-green-500">https://www.vacinaja.sp.gov.br/</a></p>
             </div>
         </main>
       </header>
@@ -48,4 +79,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
